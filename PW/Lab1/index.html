@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Formular vânzare casă</title>
+    <meta charset="utf-8"/>
+</head>
+<body>
+<form>
+    <table>
+        <tr>
+            <th colspan="8" bgcolor="#c71585">Înregistrare casă</th>
+        </tr>
+        <tr>
+            <th>Adresă</th>
+            <td><input type="text"/></td>
+            <th>Oraș</th>
+            <td>
+                <select>
+                    <optgroup label="România">
+                        <option>Cluj</option>
+                        <option>București</option>
+                    </optgroup>
+                    <optgroup label="Magyarország">
+                        <option>Budapest</option>
+                        <option>Debrecen</option>
+                    </optgroup>
+                </select>
+            </td>
+            <th>Țară</th>
+            <td>
+                <select>
+                    <option>România</option>
+                    <option>Magyarország</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <th>Google Maps link</th>
+            <td><input type="url"/></td>
+            <td colspan="3" rowspan="2">
+                <table>
+                    <tr>
+                        <th rowspan="2">Coordonate</th>
+                        <th>Latitudine</th>
+                        <td><input type="number"/></td>
+                    </tr>
+                    <tr>
+                        <th>Longitudine</th>
+                        <td><input type="number"/></td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr></tr>
+        <tr></tr>
+    </table>
+</form>
+</body>
+</html>
