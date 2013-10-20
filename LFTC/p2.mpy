@@ -1,0 +1,15 @@
+
+def float gcd(float a, float b):
+    if a == 0:
+        return a
+    if b == 0:
+        return b
+    return gcd(b, a % b)
+
+float a
+float b
+float c
+input(a)
+input(b)
+c = gcd(a,b)
+print(c)

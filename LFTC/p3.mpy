@@ -1,0 +1,11 @@
+float n
+float sum = 0
+input(n)
+float i = 0
+while i < n:
+    float nr
+    input(nr)
+    sum = sum + nr
+    i = i + 1
+print("Suma este: ")
+print(sum)

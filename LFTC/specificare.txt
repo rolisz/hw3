@@ -3,12 +3,12 @@ REGULI SINTACTICE
 program = {"\n" | stmt}
 
 stmt = simple_stmt | compound_stmt
-simple_stmt = small_stmt NEWLINE
+simple_stmt = small_stmt "\n"
 small_stmt = expr_stmt | print_stmt | read_stmt | flow_stmt
 
 expr_stmt = type var ['=' atom]
-print_stmt = 'print' atom
-read_stmt = 'input(' var ')'
+print_stmt = 'print' '(' atom ')'
+read_stmt = 'input' '(' var ')'
 flow_stmt = break_stmt | continue_stmt | return_stmt
 break_stmt = 'break'
 continue_stmt = 'continue'
@@ -16,8 +16,8 @@ return_stmt = 'return' atom
 
 compound_stmt = if_stmt | while_stmt | funcdef
 
-funcdef = 'def' func_name '(' argslist ')' ':' suite
-argslist = {(var['=' constant] [',']}
+funcdef = 'def' type func_name '(' argslist ')' ':' suite
+argslist = {(type var['=' constant] [',']}
 
 if_stmt = 'if' test ':' suite {'elif' test ':' suite} ['else' ':' suite]
 while_stmt = 'while' test ':' suite ['else' ':' suite]
@@ -27,7 +27,7 @@ test = and_test {'or' and_test}
 and_test = not_test {'and' not_test}
 not_test = ['not'] comparison
 comparison = expr comp_op expr
-comp_op = '<'|'>'|'=='|'>='|'<='|'<>'|'!='
+comp_op = '<'|'>'|'=='|'>='|'<=' | '!='
 expr = term {('+'|'-') term}
 term = factor {('*'|'/'|'%') factor}
 factor = ['+'|'-'] atom | atom
@@ -36,7 +36,7 @@ type = ("float"|"char") [\[[1-9]{cifra}\]]
 
 REGULI LEXICALE
 
-var =  litera {litera|cifra}
+var =  litera {litera|cifra}[\[{cifra}\]]
 constant = \"{litera|cifra}\"| nr_real
 nr_real = [1-9]{cifra}'.'{cifra}
 litera = [A-Za-z]
