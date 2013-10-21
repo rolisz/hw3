@@ -38,6 +38,6 @@ REGULI LEXICALE
 
 var =  litera {litera|cifra}[\[{cifra}\]]
 constant = \"{litera|cifra}\"| nr_real
-nr_real = [1-9]{cifra}'.'{cifra}
+nr_real = (0|[1-9]{cifra})'.'{cifra}
 litera = [A-Za-z]
 cifra = [0-9]

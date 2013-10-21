@@ -12,7 +12,7 @@ typedef struct line {
 
 void parse_get(char* query) {
 	char* token = strtok (query,"&");
-	char * key;
+	char * key = malloc(50);
 	int value;
 	while (token != NULL) {
 		sscanf(token, "%[^=]=%d", key, &value);
@@ -25,7 +25,7 @@ void parse_get(char* query) {
 
 void parse_cookie(char* cookie) {
 	char* token = strtok (cookie,";");
-	char * key;
+	char * key = malloc(50);
 	int value;
 	while (token != NULL) {
 		sscanf(token, "%[^=]=%d", key, &value);
@@ -38,14 +38,13 @@ void parse_cookie(char* cookie) {
 
 line get_question(int n) {
 	FILE *f = fopen(DATAFILE,"r");
-	char* read;
 	char* file_line = malloc(100);
 	int len = 0;
 	int nr;
 	char* expr = malloc(50);
 	int rez;
 	char ch;
-	while ((read = fgets(file_line, 100, f)) != NULL) {
+	while (fgets(file_line, 100, f) != NULL) {
 		sscanf(file_line, "%d %[^=] = %d", &nr, expr, &rez);
 		if (nr == n) {
 			line l = {nr, expr, rez};
@@ -54,7 +53,7 @@ line get_question(int n) {
 		}
     }
     fclose(f); 
-	line l = {-1, "", 0};
+	line l;
 	return l;
 }
 
@@ -68,6 +67,7 @@ int main(void)
 
 	parse_get(data);
 	line l = get_question(n);
+
 	char* lenstr = getenv("CONTENT_LENGTH");
 	int len;
 	if(lenstr != NULL) {
@@ -83,11 +83,11 @@ int main(void)
 			score +=1;
 		}
 	}
+	
 	printf("Set-Cookie: score=%d\n", score);
 	printf("Content-type:text/html\n\n");
-	
 	printf("<html><head><title>Chestionare</title></head><body>");
-	if (l.n == -1) {
+	if (l.expr == NULL) {
 		printf("Your score is: %d", score);
 	}
 	else {

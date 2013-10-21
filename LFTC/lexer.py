@@ -1,3 +1,4 @@
+#!/usr/bin/python
 import re
 
 __author__ = 'Roland'
@@ -86,7 +87,6 @@ def lexer(program):
                     indentation.pop()
                 if len(indentation) == 0:
                     error(i, "incorrect indentation")
-        print(list(re.split("( |=|<|>|==|>=|<=|!=|\+|-|\*|/|%|\[|\]|\(|\)|,|:)", line)))
         in_string = ""
         for atom in re.split("( |=|<|>|==|>=|<=|!=|\+|-|\*|/|%|\[|\]|\(|\)|,|:)", line):
             if len(atom.strip()) == 0 and not in_string:
@@ -110,10 +110,12 @@ def lexer(program):
             else:
                 if re.match("^[a-zA-Z][a-zA-Z0-9]*(\[[0-9]+\])?$", atom):
                     fip.append((0, get_poz(atom, ts_ident)))
-                elif re.match("[1-9][0-9]*\.[0-9]+", atom):
+                elif re.match("(0|[1-9][0-9]*)\.[0-9]+", atom):
                     fip.append((1, get_poz(atom, ts_const)))
                 else:
                     error(i, " unidentified expression " + atom)
+        if in_string:
+            error(i, " unterminated string constant ")
         fip.append((codif.index('\n'), 0))
     return fip, ts_const, ts_ident
 
@@ -121,8 +123,7 @@ def lexer(program):
 if len(sys.argv) == 1:
     print("You must give file to analyze as argument")
 
-#file = sys.argv[1]
-file = "p1.mpy"
+file = sys.argv[1]
 f = open(file, "rb")
 fip, ts_const, ts_ident = lexer(f.read())
 print(fip)

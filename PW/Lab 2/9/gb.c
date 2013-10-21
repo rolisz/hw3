@@ -79,7 +79,7 @@ int main(void)
 	printf("Content-type:text/html\n\n");
 	
 	printf("<html><head><title>Guest Book</title></head><body>");
-	if (stricmp(getenv("REQUEST_METHOD"), "POST") == 0) {
+	if (strcasecmp(getenv("REQUEST_METHOD"), "POST") == 0) {
 		char* lenstr = getenv("CONTENT_LENGTH");
 		int len;
 		if(lenstr != NULL) {
