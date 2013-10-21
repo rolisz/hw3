@@ -1,6 +1,6 @@
 float r
 input(r)
-print("Perimetrul este: ")
+print("Perimetrul este" )
 print(2.0*3.14*r)
-print("Aria este: ")
+print("Aria este ")
 print(3.14*r*r)
