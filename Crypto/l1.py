@@ -14,6 +14,7 @@ def invert_2_2_matrix(m, n=27):
     d = m[3]
 
     inv = modular_inverse(a*d-b*c,n)
+    print(inv)
     return [inv*d%n, (-inv*b)%n, (-inv*c)%n, inv*a%n]
 
 
@@ -60,6 +61,9 @@ class Application(tk.Frame):
         alphabet = self.alphabet_var.get()
         n = len(alphabet)
         numeric = [alphabet.index(x) for x in self.plaintext_var.get()]
+        print(numeric)
+        if len(numeric) % 2 != 0:
+            numeric.append(alphabet.index(" "))
         it = iter(numeric)
 
         key = map(int,self.key_var.get().split())
