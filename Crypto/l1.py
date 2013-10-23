@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 import Tkinter as tk
 import string
+import tkMessageBox
 
 def modular_inverse(x, n=27):
     for i in range(n):
@@ -59,10 +60,21 @@ class Application(tk.Frame):
     def encrypt_func(self):
         alphabet = self.alphabet_var.get()
         n = len(alphabet)
-        numeric = [alphabet.index(x) for x in self.plaintext_var.get()]
+        try:
+            numeric = [alphabet.index(x) for x in self.plaintext_var.get()]
+        except:
+            tkMessageBox.showerror('Error',"Invalid character in plain text")
+            return
         it = iter(numeric)
 
-        key = map(int,self.key_var.get().split())
+        try:
+            key = map(int,self.key_var.get().split())
+        except:
+            tkMessageBox.showerror('Error',"Invalid character in key")
+            return
+        if len(key) != 4:
+            tkMessageBox.showerror('Error',"Invalid key length")
+            return
         encryption = []
         for l1, l2 in zip(it, it):
             encryption.append((l1*key[0] + l2*key[2]) % n)
