@@ -15,6 +15,7 @@ def invert_2_2_matrix(m, n=27):
     d = m[3]
 
     inv = modular_inverse(a*d-b*c,n)
+    print(inv)
     return [inv*d%n, (-inv*b)%n, (-inv*c)%n, inv*a%n]
 
 
@@ -60,6 +61,7 @@ class Application(tk.Frame):
     def encrypt_func(self):
         alphabet = self.alphabet_var.get()
         n = len(alphabet)
+
         try:
             numeric = [alphabet.index(x) for x in self.plaintext_var.get()]
         except:
@@ -87,8 +89,11 @@ class Application(tk.Frame):
         n = len(alphabet)
         numeric = [alphabet.index(x) for x in self.cyphertext_var.get()]
         it = iter(numeric)
-
-        key = invert_2_2_matrix(map(int,self.key_var.get().split()))
+        try:
+            key = invert_2_2_matrix(map(int,self.key_var.get().split()))
+        except:
+            tkMessageBox.showerror('Error',"Invalid key, can't be inverted")
+            return 
         print(key)
         decryption = []
         for l1, l2 in zip(it, it):
