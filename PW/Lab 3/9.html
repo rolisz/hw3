@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <style>
+        .dialog .text {
+            position: relative;
+            padding: 15px;
+            margin: 1em 0 3em;
+            border: 5px solid #5a8f00;
+            color: #333;
+            background: #fff;
+            -webkit-border-radius: 10px;
+            -moz-border-radius: 10px;
+            border-radius: 10px;
+            width: 200px;
+            text-align: center;
+        }
+
+        .dialog .text:before {
+            top: 10px;
+            bottom: auto;
+            left: -30px;
+            border-width: 15px 30px 15px 0;
+            border-color: transparent #5a8f00;
+            content: "";
+            position: absolute;
+            border-style: solid;
+            display: block;
+            width: 0;
+        }
+
+        .dialog .text:after {
+            top: 16px;
+            bottom: auto;
+            left: -21px;
+            border-width: 9px 21px 9px 0;
+            border-color: transparent #fff;
+            content: "";
+            position: absolute;
+            border-style: solid;
+            display: block;
+            width: 0;
+        }
+
+        .dialog li {
+            margin-top: 60px;
+            margin-left: 140px;
+            position: relative;
+
+        }
+
+        .dialog li:before {
+            position: absolute;
+            left: -180px;
+            top: -40px;
+            background-image: url(spritesheet.png);
+            background-repeat: no-repeat;
+            display: block;
+        }
+
+        .dialog .alice:before {
+            content: "";
+            width: 128px;
+            height: 128px;
+            background-position: -5px -5px;
+
+        }
+
+        .dialog .bob:before {
+            content: "";
+            width: 128px;
+            height: 128px;
+            background-position: -143px -5px;
+        }
+    </style>
+</head>
+<body>
+<ul class="dialog">
+    <li class="alice">
+        <div class="text">Lorem ipsum dolor sit amet, consectetur adipisicing elit</div>
+    </li>
+    <li class="bob">
+        <div class="text">Sed ut perspiciatis unde omnis iste nat us error sit voluptatem accusantium doloremque
+            laudantium, totam rem
+            aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt
+        </div>
+    </li>
+    <li class="alice">
+        <div class="text">
+            Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse
+        </div>
+    </li>
+</ul>
+</body>
+</html>

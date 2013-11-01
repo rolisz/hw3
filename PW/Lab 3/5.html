@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/html">
+<head>
+    <title>Problema 5 - lista de imagini</title>
+    <style>
+        /** Two column layout */
+        .two_columns_list {
+            border: 1px solid gray;
+            padding: 10px;
+            list-style: none;
+            width: 490px;
+            overflow: hidden;
+        }
+        .two_columns_list li .wrap {
+            background-color: #47a447;
+            margin: 10px;
+        }
+        .two_columns_list li {
+            width: 50%;
+            float: left;
+            display: inline;
+        }
+        .two_columns_list img {
+            padding: 10px 10px 0 10px;
+        }
+        .two_columns_list .title {
+            display: block;
+            text-align: center;
+        }
+        /** One column layout **/
+        .one_col_list {
+            border: 1px solid gray;
+            list-style: none;
+            width: 490px;
+            overflow: hidden;
+            padding: 0;
+        }
+        .one_col_list li .wrap {
+            background-color: #ed9c28;
+            overflow: hidden;
+        }
+        .one_col_list li {
+            padding: 0;
+        }
+        .one_col_list img {
+            padding: 10px 10px 0 10px;
+            float: left;
+        }
+        .one_col_list .title {
+            height: 230px;
+            display: block;
+            float: left;
+            line-height: 230px;
+        }
+
+    </style>
+    <script>
+        function change_layout() {
+            var ul = document.getElementsByTagName('ul')[0];
+            if (ul.className == 'two_columns_list') {
+                ul.className = 'one_col_list';
+            } else {
+                ul.className = 'two_columns_list';
+            }
+        }
+    </script>
+</head>
+<body>
+    <ul class="one_col_list">
+        <li><div class="wrap"><img src="knn.png" width="200px"/> <span class="title">k-neareste neighbors</span></div></li>
+        <li><div class="wrap"><img src="linear_svm.png" width="200px"/> <span class="title">Linear SVM</span></div></li>
+        <li><div class="wrap"><img src="dec_tree.png" width="200px"/> <span class="title">Decision Tree</span></div></li>
+        <li><div class="wrap"><img src="naive_bayes.png" width="200px"/> <span class="title">Naive Bayes</span></div></li>
+    </ul>
+    <button onclick="change_layout()" >Switch layout</button>
+
+</body>
+</html>
