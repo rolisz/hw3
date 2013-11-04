@@ -1,0 +1,26 @@
+i 1-9 z B
+i 0 oh F
+oh x h
+oh 0-7 o F
+z 0-9 z F
+z u s1 F
+z U s1
+z l s2 F
+z L s2
+o 0-7 o
+o u s1
+o U s1
+o l s2
+o L s2
+h 0-9 h2 F
+h a-f h2
+h A-F h2
+h2 0-9 h2
+h2 a-f h2
+h2 A-F h2
+h2 u s1
+h2 U s1
+h2 l s2
+h2 L s2
+s2 l s3 F
+s2 L s3
