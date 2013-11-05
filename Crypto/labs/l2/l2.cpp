@@ -1,7 +1,10 @@
 #include <iostream>
 #include "InfInt.h"
 #include <vector>
-#include <algorithm>  
+#include <algorithm>
+#include <limits>
+#include <string.h>
+#include <time.h>
 using namespace std;
 
 vector<InfInt> trial_division_primes(InfInt n) {
@@ -99,14 +102,66 @@ InfInt stein(InfInt num1, InfInt num2)
 	return num2;
 }
 
-int main() {
+void gen_random(char *s, const int len) {
+    static const char digits[] = "0123456789";
+    s[0] = digits[rand() % (sizeof(digits) - 2) + 1];
+    for (int i = 1; i < len; ++i) {
+        s[i] = digits[rand() % (sizeof(digits) - 1)];
+    }
+
+    s[len] = 0;
+}
+
+int main(int argc, char* argv[]) {
 	//generate_prime_list(65536);
-	while (!cin.eof()) {
-		InfInt nr1,nr2;
-		cin>>nr1;
-		cin>>nr2;
-		//cout<<"Prime factorization: "<<prime_factorizations(nr1, nr2)<<endl;
-		cout<<"Euclid: "<<euclid(nr1, nr2)<<endl;
-		cout<<"Stein: "<<stein(nr1, nr2)<<endl;
+	if (argc > 1) {
+	    srand(time(NULL));
+	    if (strcmp(argv[1], "list") == 0) {
+            for (int i = 2; i < 30; i++) {
+                char* s1 = (char*)malloc(i* sizeof(s1));
+                char* s2 = (char*)malloc(i * sizeof(s2));
+                gen_random(s1, i);
+                gen_random(s2, i);
+                InfInt nr1 = InfInt(s1);
+                InfInt nr2 = InfInt(s2);
+                cout<<i<<",";
+                clock_t t;
+                if (nr1 < numeric_limits<int>::max()/100 && nr2 < numeric_limits<int>::max()/100) {
+                    t = clock();
+                    for (int j = 0; j < 15; j++) {
+                        InfInt c1 = prime_factorizations(nr1, nr2);
+                    }
+                    t = clock() - t;
+                    cout<<t;
+                }
+                cout<<",";
+                t = clock();
+                for (int j = 0; j < 15; j++) {
+                    InfInt c1 = euclid(nr1, nr2);
+                }
+                t = clock() - t;
+                cout<<t<<",";
+                t = clock();
+                for (int j = 0; j < 15; j++) {
+                    InfInt c2 = stein(nr1, nr2);
+                }
+                t = clock() - t;
+                cout<<t<<endl;
+                free(s1);
+                free(s2);
+            }
+	    }
+	}
+	else {
+        while (!cin.eof()) {
+            InfInt nr1,nr2;
+            cin>>nr1;
+            cin>>nr2;
+            if (nr1 < numeric_limits<int>::max() && nr2 < numeric_limits<int>::max()) {
+                cout<<"Prime factorization: "<<prime_factorizations(nr1, nr2)<<endl;
+            }
+            cout<<"Euclid: "<<euclid(nr1, nr2)<<endl;
+            cout<<"Stein: "<<stein(nr1, nr2)<<endl;
+        }
 	}
 }

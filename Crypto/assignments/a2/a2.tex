@@ -1,0 +1,81 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage{xltxtra}
+\usepackage{fancyhdr}
+\usepackage[top=1in, bottom=1.5in, left=1cm, right=1cm]{geometry}
+\usepackage{setspace}
+\onehalfspacing
+% Chestiile pentru mate
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{bbm}
+\author{Roland Szabo, gr. 235}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\makeatletter
+\makeatother
+\lhead{Roland Szabo, gr. 235}
+\rhead{Assignment 2, 06.11.13}
+\begin{document}
+
+
+We use an alphabet composed of a blank space and the 26 letters of the English alphabet.
+
+$ k = 2, l = 3 $
+
+The plaintext is SZAB, which split into groups is: SZ / AB. Numerically: $ SZ \mapsto 19 \cdot 27 + 26 = 539, AB \mapsto 1 \cdot 27 + 2  = 29$.
+
+We choose $p = 37, q = 31$, so $ n = p q = 1147 , \phi(n) = 1080$. We pick $ e = 17 , gcd(e,1080) = 1 $. 
+
+The public key is: $ K_E = (1147, 17) $
+
+We compute the cyphertext:
+
+$$
+c = m^e \mod n = 
+\left\{\begin{matrix}
+ 539^{17} \mod 1147 = 104  \\ 
+ 29^{17} \mod 1147 = 1050
+\end{matrix}\right.
+$$
+
+We calculated the powers using the repeated squaring modular exponentiation algorithm: 
+
+$ 539^{17} \mod 1147 = 539^{2^0 +2^4} = 539 \cdot (((539^2)^2)^2)^2 = 539 \cdot ((330^2)^2)^2) = 
+ 539 \cdot (1082^2)^2 = 539 \cdot 784^2 = 539 \cdot 1011 \mod 1147  = 104 $
+ 
+$ 29^{17} \mod 1147 = 29^{2^0 +2^4} = 29 \cdot (((29^2)^2)^2)^2 = 29 \cdot ((841^2)^2)^2) = 
+ 29 \cdot (729^2)^2 = 29 \cdot 380^2 = 29 \cdot 1025 \mod 1147  = 1050 $
+ 
+ 
+The literal equivalents are: 
+
+$$ 
+\left\{\begin{matrix}
+104 = 0 \cdot 27^2 + 3 \cdot 27 + 23 \mapsto \_ C W \\
+1050 = 1 \cdot 27^2 + 11 \cdot 27 + 24 \mapsto A K X 
+\end{matrix}\right. $$
+
+The cyphertext is \_CWAKX
+
+The private key is $ K_D = d = e^{-1} \mod \phi(n) = 953 $
+
+Using the private key we decrypt the cyphertext:
+
+$$
+m = c^d \mod n = 
+\left\{\begin{matrix}
+ 104^{953} \mod 1147 = 539  \\ 
+ 1050^{953} \mod 1147 = 29
+\end{matrix}\right.
+$$
+
+$ 104^{953} \mod 1147 = 539^{1110111001_2} = 104^{2^0 + 2^3 + 2^4+2^5 +2^7 +2^8 + 2^9} = 104 \cdot 608 \cdot 330 \cdot 1082 \cdot 1011 \cdot 144 \cdot 90 = 539 $
+ 
+$ 1050 ^{953} \mod 1147 = 1050^{2^0 + 2^3 + 2^4+2^5 +2^7 +2^8 + 2^9} = 1050 \cdot 1025 \cdot 1120 \cdot 729 \cdot 1025 \cdot 1120 \cdot 729 = 29 $
+
+$ 539 = 19 \cdot 27 + 26 \mapsto SZ $
+
+$ 29 = 1 \cdot 27 +2 \mapsto AB $ 
+
+The result is SZAB, which is what we encrypted in the first place. 
+\end{document}
