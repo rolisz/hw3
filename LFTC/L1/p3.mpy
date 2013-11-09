@@ -7,5 +7,5 @@ while i < n:
     input(nr)
     sum = sum + nr
     i = i + 1.0
-print("Suma este: ")
+print("Suma este ")
 print(sum)
