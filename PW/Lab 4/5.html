@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Combobox</title>
+    <style>
+        #city-list {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <label>Introduceți un oraș:</label><input type="text" name="city" id="city" />
+        <ul id="city-list">
+            <li>Cluj-Napoca</li>
+            <li>Marghita</li>
+            <li>Oradea</li>
+            <li>București</li>
+        </ul>
+    </div>
+<script>
+    var input = document.getElementById('city');
+    var list = document.getElementById('city-list');
+    var list_items = list.getElementsByTagName('li');
+
+    function update_list() {
+        list.style.display = "block";
+
+        for (var i = 0; i < list_items.length; i++) {
+            if (list_items[i].innerText.search(input.value) == -1) {
+                list_items[i].style.display = 'none';
+            } else {
+                list_items[i].style.display = 'block';
+            }
+        }
+    }
+    input.addEventListener('input', update_list);
+    for (var i = 0; i < list_items.length; i++) {
+        list_items[i].addEventListener('click', function(e) {
+            input.value = this.innerText;
+            update_list();
+        })
+    }
+</script>
+</body>
+</html>

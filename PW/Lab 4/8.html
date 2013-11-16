@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>SorTable</title>
+</head>
+<body>
+    <table id="sortable">
+        <thead>
+        <tr><th data-order="asc">Nr.</th><th>Nume</th><th>Nota</th></tr>
+        </thead>
+        <tbody>
+        <tr><td>1</td><td>Pop Ionescu</td><td>6</td></tr>
+        <tr><td>2</td><td>Ion Popescu</td><td>8</td></tr>
+        <tr><td>3</td><td>Vlad Georgescu</td><td>7</td></tr>
+        <tr><td>4</td><td>George Vladescu</td><td>10</td></tr>
+        </tbody>
+    </table>
+<script>
+    var table = document.getElementById('sortable');
+    var headers = table.getElementsByTagName('th');
+    for (var i = 0; i < headers.length; i++) {
+        (function(i) {headers[i].addEventListener('click', function(e) {
+            var ds = this.dataset;
+            if (!ds.order) {
+                ds.order = 'asc';
+            }
+            if (ds.order == 'asc') {
+                sort_table(i, 1);
+                ds.order = 'desc';
+            }
+            else {
+                sort_table(i, -1);
+                ds.order = 'asc';
+            }
+
+
+        })})(i);
+    }
+
+    function sort_table(col, dir) {
+            var tb = table.tBodies[0],
+                tr = Array.prototype.slice.call(tb.rows, 0),
+                i;
+            tr = tr.sort(function (a, b) { // sort rows
+                return dir
+                    * (a.cells[col].textContent.trim()
+                        .localeCompare(b.cells[col].textContent.trim())
+                       );
+            });
+            for(i = 0; i < tr.length; ++i) {
+                tb.appendChild(tr[i]);
+            }
+    }
+</script>
+</body>
+</html>
