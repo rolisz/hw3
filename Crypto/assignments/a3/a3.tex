@@ -1,0 +1,56 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage{xltxtra}
+\usepackage{fancyhdr}
+\usepackage[top=1in, bottom=1.5in, left=1cm, right=1cm]{geometry}
+\usepackage{setspace}
+\onehalfspacing
+% Chestiile pentru mate
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{bbm}
+\author{Roland Szabo, gr. 235}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\makeatletter
+\makeatother
+\lhead{Roland Szabo, gr. 235}
+\rhead{Assignment 3, 20.11.13}
+\begin{document}
+
+Test the primality of 2887 and 481 using the Miller-Rabin test. Check with 3 bases if necessary. 
+
+For $ n = 2887 $.
+
+We write $ n - 1 = 2^s t $:
+
+$ 2886 = 2^1 * 1443 \Rightarrow s = 1, t = 1443 $
+
+We choose $ b = 13 $.
+
+$ r = b^t \mod n = 13^1443 = 13^{2^0 + 2^1 + 2^5 + 2^7 + 2^8 + 2^10} = 13 \cdot 13^{2^1 + 2^5 + 2^7 + 2^8 + 2^10} = 13 \cdot 13^2 \cdot 13^{2^5 + 2^7 + 2^8 + 2^10} = 2197 \cdot 13^32 \cdot 13^{2^7 + 2^8 + 2^10} = 1422 \cdot 1422^4 \cdot 1422^8 \cdot 13^1023 = 1 $
+
+Because $ r = 1 $, 2887 has passed the first iteration of the Miller-Rabin test
+
+We choose $ b = 7 $
+
+$ r = b^t \mod n = 7^1443 = 7^{2^0 + 2^1 + 2^5 + 2^7 + 2^8 + 2^10} = 7 \cdot 7^{2^1 + 2^5 + 2^7 + 2^8 + 2^10} = 7 \cdot 7^2 \cdot 7^{2^5 + 2^7 + 2^8 + 2^10} = 343 \cdot 13^32 \cdot 7^{2^7 + 2^8 + 2^10} = ... = 1 \mod 2887$
+
+Because $ r = 1 $, 2887 has passed the second iteration of the Miller-Rabin test
+
+We choose $ b = 69 $
+
+$ r = b^t \mod n = 6^1443 \mod 2887 = 1 \mod 2887$
+
+Because $ r = 1 $, 2887 has passed the third iteration of the Miller-Rabin test, and we can say that it is prime with probability $ 1 - 1/4^3 = 98.43 \%$.
+
+For $ n =  481 $.
+
+$ 480 = 2^5 \cdot 15 \Rightarrow s = 5, t = 15 $. 
+
+We choose $ b = 432 $.
+
+$ r = b^t \mod n = 432^15 \mod 481 = 432^{2^0 + 2^1 + 2^2 + 2^3} \mod 481 = 27 \mod 481 $. 
+
+Because $ 27 \neq 1 \text{ and } 27 \neq 480 $ we repeatedly square r, $ s - 1 $ times, and we get: $ 248, 417, 248, 417 $. Because the last one is not $ n-1 = 480 $, we can say that 481 is composite. 
+
+\end{document}

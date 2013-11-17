@@ -1,0 +1,77 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage{xltxtra}
+\usepackage{fancyhdr}
+\usepackage[top=1in, bottom=1.5in, left=1cm, right=1cm]{geometry}
+\usepackage{setspace}
+\usepackage{bbm}
+\usepackage{algorithmicx}
+\usepackage{algpseudocode}
+\usepackage{algorithm}
+\usepackage{graphicx}
+\newcommand*\Let[2]{\State #1 $\gets$ #2}
+\onehalfspacing
+% Chestiile pentru mate
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{bbm}
+\author{Roland Szabo, gr. 235}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\makeatletter
+\makeatother
+\lhead{Roland Szabo, gr. 235}
+\rhead{Lab 3, 20.11.13}
+\begin{document}
+
+\section{Problem statement}
+Implement the algorithm for solving systems of congruences. 
+
+\section{Algorithms}
+\subsection{Modular inverse}
+Brute force algorithm
+	\begin{algorithmic}
+		\Require $ gcd(a,n) = 1 $ 
+		\Ensure{$ b \cdot a \equiv 1 \mod{n} $}
+		\Procedure{mod\_inverse}{a,n}
+			\Comment{ Complexity: $ \theta (2^n) $ }
+			\For{ i=1,n}
+				\If{ $ a \cdot i \equiv 1 \mod{n} $}
+					\Let{mod\_inverse}{i}
+				\EndIf
+			\EndFor
+		\EndProcedure	
+	\end{algorithmic}
+	
+\subsection{Euclid's algorithm}
+	\begin{algorithmic}
+		\Ensure{$ b c = gcd(a,b) $}
+		\Procedure{euclid}{a,b}
+			\Comment{ Complexity: $ \theta (n) $ }
+			\If{$ a == 0 $}
+				\Let{euclid}{b}
+			\EndIf
+			\If{$ b == 0 $}
+				\Let{euclid}{a}
+			\EndIf
+			\While{$ a > 0 $}
+				\Let{temp}{a}
+				\Let{a}{$ b \mod a $}
+				\Let{b}{temp}				
+			\EndWhile
+			\Let{euclid}{a}
+		\EndProcedure	
+	\end{algorithmic}
+
+\subsection{Solve system of congruences using Chinese remainder theorem}
+	\begin{algorithmic}
+		\Ensure{$ gcd(n_i, n_j) = 1 \forall i,j = 1,r $}
+		\Procedure{solve}{a,n}
+			\Comment{ Complexity: $ \theta (\log^2(N)) $ }
+			\Let{N}{$ n_1 n_2 ... n_r$}
+		\Let{solve}{$ \sum_{i=1}^{r} a_i \frac{N}{n_i} (\frac{N}{n_i} ^ {-1} \mod n_i) \mod N $}
+		\EndProcedure	
+	\end{algorithmic}
+
+
+
+\end{document}
