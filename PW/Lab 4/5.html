@@ -28,7 +28,7 @@
         list.style.display = "block";
 
         for (var i = 0; i < list_items.length; i++) {
-            if (list_items[i].innerText.search(input.value) == -1) {
+            if (list_items[i].innerHTML.search(input.value) == -1) {
                 list_items[i].style.display = 'none';
             } else {
                 list_items[i].style.display = 'block';
@@ -38,7 +38,7 @@
     input.addEventListener('input', update_list);
     for (var i = 0; i < list_items.length; i++) {
         list_items[i].addEventListener('click', function(e) {
-            input.value = this.innerText;
+            input.value = this.innerHTML;
             update_list();
         })
     }
