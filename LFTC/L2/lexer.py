@@ -1,5 +1,5 @@
 #!/usr/bin/python
-from LFTC.L2.fsm import parse_automaton, accept
+from fsm import parse_automaton, accept
 
 import re
 
