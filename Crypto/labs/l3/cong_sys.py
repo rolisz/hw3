@@ -26,7 +26,7 @@ def solve_system(a_list, n_list):
     for a, n in zip(a_list, n_list):
         K = modular_inverse(N/n, n)
         x += a* N/n * K % N
-    return x % N
+    return (x % N, N)
 
 a_list = []
 n_list = []
@@ -43,5 +43,5 @@ while inp:
 
 
 print("Solutia este: ")
-print(solve_system(a_list, n_list))
+print(" %d modulo %d " % solve_system(a_list, n_list))
 
