@@ -114,9 +114,20 @@ def get_poz(atom, ts):
     return ts.elements.index(atom)
 
 
-var_lang = ["i a-z s B", "i A-Z s B", "s a-z s F", "s A-z s F", "s 0-9 s F", "s [ t", "t 0-9 f", "f 0-9 f", "f ] l F"]
+var_lang = ["i a-z s B",
+            "i A-Z s B",
+            "s a-z s F",
+            "s A-z s F",
+            "s 0-9 s F",
+            "s [ t",
+            "t 0-9 f",
+            "f 0-9 f",
+            "f ] l F"]
 var_aut = parse_automaton(var_lang)
-num_lang = ["i 0 s B", "i 1-9 t B", "s . n", "t 0-9 f", "t . n", "f 0-9 f", "f . n", "n 0-9 n F"]
+num_lang = ["i 0 s B",
+            "i 1-9 t B",
+            "s . n",
+            "t 0-9 f", "t . n", "f 0-9 f", "f . n", "n 0-9 n F"]
 num_aut = parse_automaton(num_lang)
 def lexer(program):
     """
