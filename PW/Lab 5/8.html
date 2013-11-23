@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Slider</title>
+    <style>
+        .ads li {
+            display: none;
+        }
+        .ads {
+            list-style: none;
+            min-height: 100px;
+        }
+    </style>
+</head>
+<body>
+<ol class="ads">
+    <li><img src="http://www.numpy.org/_static/numpy_logo.png"><div>Numpy is the fundamental package for scientific
+            computing with Python</div></li>
+    <li><img src="http://www.scipy.org/_static/logo.gif"><div>SciPy  is a Python-based ecosystem of open-source
+            software for mathematics, science, and engineering.</div></li>
+    <li><img src="http://scikit-learn.org/stable/_static/scikit-learn-logo-small.png"><div>scikit-learn is simple and
+            efficient library for machine learning in Python</div></li>
+</ol>
+
+<div id="slider">
+    <button id="prev">Prev</button>
+    <button id="next">Next</button>
+</div>
+
+<script src="jquery-2.0.3.js"></script>
+<script>
+    var current = 0;
+    var ads = $('.ads li');
+
+    var timeout;
+
+    function change(dir) {
+        $(ads[current]).fadeOut();
+        if (dir == -1) {
+            current = (current - 1) % ads.length;
+        } else {
+            current = (current + 1) % ads.length;
+        }
+        setTimeout(function() {
+            $(ads[current]).fadeIn(); },
+        1000);
+        timeout = setTimeout(change, 5000);
+    }
+
+    change();
+    $('#prev').click(function() {
+        clearTimeout(timeout);
+        change(-1);
+    });
+    $('#next').click(function() {
+        clearTimeout(timeout);
+        change();
+    });
+</script>
+</body>
+</html>

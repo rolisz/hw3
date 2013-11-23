@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Memory game</title>
+    <style>
+        #table, th, td {
+            border: 1px solid #C0C0C0;
+        }
+        #table {
+            border-collapse:collapse;
+        }
+        #table td {
+            transition: opacity 2s;
+            opacity: 0;
+        }
+        #table td.show {
+            transition: opacity 2s;
+            opacity: 1;
+        }
+        #table td.done {
+            transition: background-color 2s;
+            background-color: #FAFF69;
+        }
+    </style>
+</head>
+<body>
+<input type="number" id="nr" step="2" value="8"/>
+<button id="shuffle">Shuffle</button>
+<table id="table">
+
+</table>
+<script src="jquery-2.0.3.js"></script>
+<script>
+    $('#shuffle').click(function() {
+        var nr = $('#nr').val();
+        var table = $('#table');
+        var numbers = [];
+        for (var i = 0; i < 2; i++) {
+            for (var j = 0; j < nr/2; j++) {
+                numbers.push(j);
+            }
+        }
+        numbers.sort(function() { return 0.5 - Math.random(); })
+
+        table.html('');
+        var content = '<tr>';
+        for(i=0; i < nr; i++){
+           content += '<td>' + numbers[i] + '</td>';
+        }
+        content += '</tr>';
+        table.append(content);
+    }).click();
+
+    var other = null;
+    $('#table td').click(function() {
+        var curr = $(this);
+        if (!curr.hasClass('done') && !curr.hasClass('show')) {
+            curr.addClass('show');
+            if (other == null) {
+                other = curr;
+            }
+            else {
+                if (curr.html() != other.html()) {
+                    setTimeout(function() {
+                        curr.removeClass('show');
+                        other.removeClass('show');
+                        other = null;
+                    }, 1000)
+
+                } else {
+                    curr.addClass('done');
+                    other.addClass('done');
+                    other = null;
+                    if ($('#table td.done').length == $('#nr').val()) {
+                        alert("Congratulations! You won the game!")
+                    }
+                }
+            }
+        }
+    });
+
+</script>
+</body>
+</html>
