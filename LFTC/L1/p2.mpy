@@ -4,8 +4,8 @@ def float gcd(float a, float b):
         return a
     if b == 0.0:
         return b
-    return gcd(b, a % b)
-
+    float c = gcd(b, a % b)
+    return c
 float a
 float b
 float c

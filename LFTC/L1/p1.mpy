@@ -1,6 +1,8 @@
 float r
 input(r)
 print("Perimetrul este" )
-print(2.0*3.14*r)
+float p = 2.0*3.14*r
+print(p)
 print("Aria este ")
-print(3.14*r*r)
+float a = 3.14*r*r
+print(a)
