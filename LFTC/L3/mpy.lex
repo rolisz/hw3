@@ -1,5 +1,6 @@
 %{
     #include <stdlib.h>
+    #include <string.h>
 	#include "mpy.tab.h"
     #include <math.h>
     int lineno = 0;
