@@ -7,16 +7,7 @@ def modular_inverse(x, n=27):
             return i
 
 
-def gcd(a, b):
-    if a == 0:
-        return b
-    if b == 0:
-        return a
-    while a > 0:
-        temp = a
-        a = b%a
-        b = temp
-    return b
+
 
 def solve_system(a_list, n_list):
     if any(gcd(a,b) != 1 for a in n_list for b in n_list if a != b):

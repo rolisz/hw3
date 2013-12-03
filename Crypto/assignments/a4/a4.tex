@@ -1,0 +1,56 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage{xltxtra}
+\usepackage{fancyhdr}
+\usepackage[top=1in, bottom=1.5in, left=1cm, right=1cm]{geometry}
+\usepackage{setspace}
+\onehalfspacing
+% Chestiile pentru mate
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{bbm}
+\author{Roland Szabo, gr. 235}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\makeatletter
+\makeatother
+\lhead{Roland Szabo, gr. 235}
+\rhead{Assignment 4, 4.12.13}
+\begin{document}
+
+Factorize 7961 using the continued fractions method. 
+
+Let $ b_{-1} = 1, b_0 = a_0 = \left \lceil{\sqrt{n}}\right \rceil = 89, x_0 = \sqrt{n} - a_0 = 0.224436... $
+
+
+\begin{tabular}{ | c | c |  c | c | c | c | c | c | c | c | c | }
+  \hline                        
+  i & 0 & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9\\
+  \hline
+  $a_i$ & 89 & 4 & 2 & 5 & 7 & 1 & 1 & 2 & 1 & 5\\
+  \hline
+  $b_i$ & 89 & 357 & 803 & 4372 & 7524 & 3935 & 3498 & 2970 & 6468 & 3466\\
+  \hline
+  $b_i^2 \mod n $ & -40 & 73 & -32 & 23 & -95 & 80 & -53 & 112 & -31 & 7\\
+  \hline  
+\end{tabular}
+
+We choose the factor base B as $ B = \{ -1, 2, 5, 7 \} $. Then $ b_i^2 \mod n $ is a B-number for $ i = 0, 2, 5, 7, 9 $. The associated vectors $ \alpha_i $ are:
+
+$$
+\alpha_0 = ( 1, 3, 1, 0), \alpha_2 = ( 1, 5, 0, 0), \alpha_5 = ( 0, 4, 1, 0), 
+\alpha_7 = (0, 4, 0, 1), \alpha_9 = (0, 0, 0, 1) 
+$$
+
+$ \alpha_7 + \alpha_9 = (0, 4, 0, 1) + (0, 0, 0, 1) = (0, 4, 0, 2) =  0 (\mod 2) $
+
+We take b to be the product of the vectors which the sum zero (7 and 9).
+
+$ b = b_7 \cdot b_7 = 2970 \cdot 3466 \mod 7961 = 447 $
+
+$ c = 2^2 \cdot 7 = 28 $
+
+Because $ b \neq \pm c $ , $ (b + c, n) = (475, 7961) = 19 $ is a factor of n.
+
+So, $ n = 19 \cdot 419 $
+
+\end{document}

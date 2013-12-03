@@ -37,7 +37,7 @@
     function change(dir) {
         $(ads[current]).fadeOut();
         if (dir == -1) {
-            current = (current - 1) % ads.length;
+            current = (current + ads.length - 1) % ads.length;
         } else {
             current = (current + 1) % ads.length;
         }
