@@ -1,7 +1,7 @@
 from functools import reduce
 from math import sqrt, log
 from random import randint, getrandbits
-from matplotlib import pyplot as plt
+# from matplotlib import pyplot as plt
 from time import time
 
 __author__ = 'Roland'
@@ -54,14 +54,16 @@ def factor(n, method=trial_div, B=None):
 def pollard_p1(n, B = None):
     if n < 150:
         return n
-    if B is None:
-        B = randint(5, int(log(n)))
-    k = lcm(range(1, B))
-    a = randint(2, n - 2)
-    a = pow(a, k, n)
-    d = gcd(a - 1, n)
-    if d not in (1, n):
-        return d
+    for i in range(5):
+        if B is None:
+            B = randint(5, int(log(n)))
+        k = lcm(range(1, B))
+        a = randint(2, n - 2)
+        a = pow(a, k, n)
+        d = gcd(a - 1, n)
+        if d not in (1, n):
+            return d
+        B = None
     return n
 
 def test(a):
@@ -75,28 +77,33 @@ def test(a):
 if __name__ == '__main__':
     import sys
     if len(sys.argv) > 1 and sys.argv[1] == 'graph':
-        time_trial = []
-        time_pollard = []
-        nrs = []
-        r = 60
-        for i in range(20):
-            nrs.append(getrandbits(r))
-        nrs.sort()
-        for nr in nrs:
-            print(nr)
-            rez = test(nr)
-            time_trial.append(rez[0])
-            time_pollard.append(rez[1])
-        print(time_pollard)
-        print(time_trial)
-        plt.plot(nrs, time_trial)
-        plt.plot(nrs, time_pollard)
-        plt.xlim([2**(r - 10), 2**r])
-        plt.ylim([0, 5])
-        plt.show()
+        pass
+    #    time_trial = []
+    #    time_pollard = []
+    #    nrs = []
+    #    r = 60
+    #    for i in range(20):
+    #        nrs.append(getrandbits(r))
+    #    nrs.sort()
+    #    for nr in nrs:
+    #        print(nr)
+    #        rez = test(nr)
+    #        time_trial.append(rez[0])
+    #        time_pollard.append(rez[1])
+    #    print(time_pollard)
+    #    print(time_trial)
+    #    plt.plot(nrs, time_trial)
+    #    plt.plot(nrs, time_pollard)
+    #    plt.xlim([2**(r - 10), 2**r])
+    #    plt.ylim([0, 5])
+    #    plt.show()
     else:
-        x, b = input("Give an integer to factorize and the bound for Pollards p-1 method").split()
-        print("Trial division: ")
-        print(factor(int(x)))
-        print("P-1:")
-        print(factor(int(x), pollard_p1, int(b)))
+        while True:
+            try:
+                x, b = raw_input("Give an integer to factorize and the bound for Pollards p-1 method \n").split()
+                print("Trial division: ")
+                print(factor(int(x)))
+                print("P-1:")
+                print(factor(int(x), pollard_p1, int(b)))
+            except Exception:
+                print("You must give both an integer and a bound")
