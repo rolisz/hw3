@@ -1,0 +1,128 @@
+body {
+    padding-top: 95px;
+}
+
+#limba {
+    margin-top: 5px;
+    margin-bottom: 0;
+}
+
+.vorbitor {
+    color: #222;
+}
+.fright {
+    float:right;
+}
+
+.tmargin {
+    margin-top: 5px; /* Fix pentru accordeon, unde is elementele intercalate si de-aia nu se activeaza regula de buton after button */
+}
+
+.accordion-groups-btns {
+    border-bottom-color: #b3b3b3;
+
+}
+
+.navbar .nav>li>a.lang-toggle {
+    border: 1px #555 solid;
+    border-radius: 5px;
+    padding: 9px 14px 9px;
+}
+
+.collapsebtn {
+    -webkit-border-bottom-left-radius: 0;
+    -moz-border-bottom-left-radius: 0;
+    -webkit-border-bottom-right-radius: 0;
+    -moz-border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+    border-width:0;
+}
+
+.greybox {
+    background-color: #eee;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    min-height: 40px;
+    line-height: 40px;
+    padding:10px;
+}
+.dategroup:first-of-type {
+    margin-top:0;
+}
+.details {
+    background-color: #eee;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    min-height: 40px;
+    padding:10px 0 0 10px;
+    position: fixed;
+    right:15px;
+}
+
+.main-content {
+    margin-top: 10px;
+}
+
+.cautare {
+    margin-top:5px;
+    margin-bottom: 5px;
+}
+.message-list {
+    padding-left: 30px;
+}
+
+.search_form ul {
+    padding: 15px;
+}
+
+.audioplayer {
+    height: 44px;
+}
+
+.details-title {
+    float:left;
+    padding-left: 20px;
+    text-transform: uppercase;
+    font-size: small;
+    width: 80px;
+    color:#BFBFBF;
+}
+
+.details-content {
+    margin-left: 100px;
+    min-height: 25px;
+}
+.container-mesaj {
+    cursor: pointer;
+    margin: 5px;
+    color: #08c;
+}
+.container-mesaj:hover {
+    color: #005580;
+    text-decoration: underline;
+}
+.verses {
+    margin-bottom: 0;
+    margin-left: 20px;
+}
+.jp-play, .jp-pause {
+    display: block;
+    overflow: hidden;
+    width:17px;
+    height:24px;
+}
+@media (max-width: 979px) {
+    body {
+        padding-top: 0;
+    }
+    .navbar .brand { /* bootstrap is really weird */
+        padding-left: 30px;
+    }
+    .fright {
+        float: none;
+    }
+
+}

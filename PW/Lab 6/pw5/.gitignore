@@ -1,0 +1,7 @@
+.idea
+.idea/*
+online.txt
+include/online.txt
+.htaccess
+upload/mesaje/mp3/*
+upload/mesaje/pdf/*
