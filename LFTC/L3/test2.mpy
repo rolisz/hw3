@@ -1,0 +1,7 @@
+int b
+input(b)
+int a
+input(a)
+int c
+c = a+b
+print(c)

@@ -1,0 +1,5 @@
+int r
+input(r)
+int b
+b = 2*r + 10
+print(b)
