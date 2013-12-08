@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Calendar</title>
+    <style>
+
+    </style>
+</head>
+<body>
+<div id="calendar">
+
+</div>
+<script src="jquery-2.0.3.js"></script>
+<script>
+    $.get('calendar.php', function(data) {
+        $('#calendar').html(data);
+    })
+	$('body').on('click','.calendar-nav a', function(e) {
+		e.preventDefault();
+		$.get(this.href, function(data) {
+			$('#calendar').html(data);
+		})
+	})
+</script>
+</body>
+</html>
