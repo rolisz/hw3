@@ -8,3 +8,4 @@ My homeworks for year 3 at UBB Computer Science
 * PW Lab 4 - 7-8
 * PW Lab 5 si 6 - 6 la ambele
 * Crypto Lab 5 - 2nd algo - El-Gamal
+* LFTC Lab 4 - slr
