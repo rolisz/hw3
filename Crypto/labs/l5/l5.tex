@@ -1,0 +1,88 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage{xltxtra}
+\usepackage{fancyhdr}
+\usepackage[top=1in, bottom=1.5in, left=1cm, right=1cm]{geometry}
+\usepackage{setspace}
+\usepackage{bbm}
+\usepackage{algorithmicx}
+\usepackage{algpseudocode}
+\usepackage{algorithm}
+\usepackage{graphicx}
+\newcommand*\Let[2]{\State #1 $\gets$ #2}
+\onehalfspacing
+% Chestiile pentru mate
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{bbm}
+\author{Roland Szabo, gr. 235}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\makeatletter
+\makeatother
+\lhead{Roland Szabo, gr. 235}
+\rhead{Lab 3, 20.11.13}
+\begin{document}
+
+\section{Problem statement}
+Implement the algorithm for solving systems of congruences. 
+
+\section{Algorithms}
+\subsection{Euclid's extended algorithm}
+	\begin{algorithmic}
+		\Ensure{$ c = gcd(a,b) \text{ and } u,v \in \mathbb{Z}, au+bv=c$}
+		\Procedure{euclid}{a,b}
+			\Let{$u_2$}{1}
+			\Let{$u_1$}{0}
+			\Let{$v_2$}{0}
+			\Let{$v_1$}{1}
+			
+			\While{$ b > 0 $}
+				\Let{q}{$ \lfloor{a/b}\rfloor $}
+				\Let{r}{$ a- qb$}
+				\Let{u}{$u_2-qu_1$}
+				\Let{v}{$v_2-qv_1$}
+				\Let{a}{b}
+				\Let{b}{r}
+				\Let{$u_2$}{$u_1$}				
+				\Let{$u_1$}{$u$}
+				\Let{$v_2$}{$v_1$}				
+				\Let{$v_1$}{$v$}
+				\Let{d}{a}
+				\Let{u}{$u_2$}
+								\Let{v}{$v_2$}
+				
+			\EndWhile
+			\Let{euclid}{a}
+		\EndProcedure	
+	\end{algorithmic}
+
+\subsection{Key generation}
+	\begin{algorithmic}
+		\Procedure{generate\_key}{}
+			\Let{p}{random\_prime\_number}
+			\Let{g}{generator\_of\_$\mathbb{Z}_p$}
+			\Let{a}{random\_integer $\in { 1, p-2} $}
+			\Let{public\_key}{p,g,$g^a$}
+			\Let{private\_key}{a}
+		\EndProcedure	
+	\end{algorithmic}
+
+\subsection{Encryption}
+	\begin{algorithmic}
+		\Procedure{generate\_key}{p, g, $g^a$,m}
+			\Let{k}{random\_integer $\in { 1, p-2} $}
+			\Let{$\alpha$}{$g^k \mod p$}
+			\Let{$\beta$}{$,\cdot (g^a)^k \mod p$}
+			\Let{c}{$(\alpha,\beta)$}
+		\EndProcedure	
+	\end{algorithmic}
+
+\subsection{Decryption}
+	\begin{algorithmic}
+		\Procedure{decryption}{p, g, $g^a$,a, $\alpha$, $\beta$}
+			\Let{m}{$\alpha^{-a}\cdot \beta \mod p $}
+		\EndProcedure	
+	\end{algorithmic}
+
+
+\end{document}
