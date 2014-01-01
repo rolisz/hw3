@@ -1,0 +1,4 @@
+assig = id '=' expr
+expr = atom | expr '+' atom
+id = 'a' | 'b' | 'c'
+atom = '1' | '2' | '3' | id
