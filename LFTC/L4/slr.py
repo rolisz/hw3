@@ -65,7 +65,7 @@ def move_dot(item):
 
 def add_transition(transitions, ind, mv, nxt):
     if (ind, mv) in transitions:
-        raise "Conflict"
+        raise "Conflict shift/reduce"
     transitions[(ind, mv)] = nxt
 
 
@@ -115,17 +115,8 @@ def make_follow_set(grammar):
             if lh == 'E':
                 import pdb
                 # pdb.set_trace()
-            if rh[-1] in grammar.nonterminals:
-                old = follow[rh[-1]].copy()
-                follow[rh[-1]].update(follow[lh])
-                if old != follow[rh[-1]]:
-                    changed = True
-            if len(rh) > 1:
-                i = -2
-                print(rh)
-                while rh[i] not in grammar.nonterminals and i >= - len(rh):
-                    i-=1
-                if i >= - len(rh):
+            for i in range(len(rh) - 1):
+                if rh[i] in grammar.nonterminals:
                     old = follow[rh[i]].copy()
                     fb = cross_first(first, *rh[i+1:])
                     follow[rh[i]].update(fb.difference({''}))
@@ -133,8 +124,24 @@ def make_follow_set(grammar):
                         follow[rh[i]].update(follow[lh])
                     if old != follow[rh[i]]:
                         changed = True
+            if rh[-1] in grammar.nonterminals:
+                old = follow[rh[-1]].copy()
+                follow[rh[-1]].update(follow[lh])
+                if old != follow[rh[-1]]:
+                    changed = True
 
     return follow
+
+
+def has_end(item, grammar):
+    res = []
+    for it in item:
+        if it[1][-1] == '..':
+            rule = (it[0], it[1][:-1])
+            res.append(grammar.rules.index(rule))
+    if len(res) > 1:
+        print("Conflict reduce/reduce!")
+    return res[0] if len(res) else None
 
 def analyze_grammar(grammar):
     item_sets = [expand_item_set({(grammar.start+"'",
@@ -162,18 +169,58 @@ def analyze_grammar(grammar):
     for i, item in enumerate(item_sets):
         if (grammar.start+"'", (grammar.start, '..')) in item:
             add_transition(transitions, i, '$', 'acc')
+        rule = has_end(item, grammar)
+        if rule:
+            for act in follow_set[grammar.rules[rule][0]]:
+                add_transition(transitions, i, act, 'r'+str(rule))
+
+    return transitions
+
+
+def analyze_input(grammar, transitions, inp):
+    stack = [0]
+    inp = inp + '$'
+    out_st = []
+    import pdb
+    # pdb.set_trace()
+    while len(inp) and len(stack):
+        current_state = stack[-1]
+        char = "'" + inp[0] + "'" if len(inp) > 1 else inp[0]
+        if (current_state, char) in transitions:
+            nxt = transitions[(current_state, char)]
+            if type(nxt) == int:
+                stack.append(char)
+                stack.append(nxt)
+                inp = inp[1:]
+            elif nxt[0] == 'r':
+                rule = grammar.rules[int(nxt[1:])]
+                for i in range(len(rule[1])):
+                    stack.pop()
+                    stack.pop()
+                stack.append(rule[0])
+                stack.append(transitions[(stack[-2], stack[-1])])
+                out_st.append(rule)
+            elif nxt == 'acc':
+                if inp == '$':
+                    return out_st
+        else:
+            break
+    print("Input not accepted!")
+
+if __name__ == "__main__":
+    gr_file = open(sys.argv[1], "rb")
+    parsed_grammar = parse_grammar(gr_file.readlines())
+
+    print(parsed_grammar)
+    pprint.pprint(make_first_set(parsed_grammar))
+    pprint.pprint(make_follow_set(parsed_grammar))
+    transitions = analyze_grammar(parsed_grammar)
+
     pprint.pprint(transitions)
 
-    return item_sets
+    while True:
+        x = raw_input("Dati o secventa: ")
+        if not x:
+            break
+        print(analyze_input(parsed_grammar, transitions, x))
 
-
-
-gr_file = open(sys.argv[1], "rb")
-parsed_grammar = parse_grammar(gr_file.readlines())
-
-print(parsed_grammar)
-pprint.pprint(make_first_set(parsed_grammar))
-pprint.pprint(make_follow_set(parsed_grammar))
-# analyzed_grammar = analyze_grammar(parsed_grammar)
-
-# pprint.pprint(analyzed_grammar)

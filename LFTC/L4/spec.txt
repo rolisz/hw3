@@ -1,0 +1,29 @@
+program = program '\n' | program stmt | 
+stmt = simple_stmt | compound_stmt
+simple_stmt = small_stmt "\n"
+small_stmt = expr_stmt | print_stmt | read_stmt | flow_stmt
+expr_stmt = type var | type var '=' atom
+print_stmt = 'print' '(' atom ')'
+read_stmt = 'input' '(' var ')'
+flow_stmt = break_stmt | return_stmt
+break_stmt = 'break'
+return_stmt = 'return' atom
+compound_stmt = if_stmt | while_stmt | funcdef
+funcdef = 'def' type func_name '(' argslist ')' ':' suite
+funccall = func_name '(' call_list ')'
+argslist = argslist type var ',' | type var | 
+call_list = call_list ',' var | var | 
+if_stmt = 'if' test ':' suite | 'if' test ':' suite 'else' ':' suite
+while_stmt = 'while' test ':' suite | 'while' test ':' suite 'else' ':' suite
+suite = simple_stmt | '\n' 'INDENT' multip_stmt 'DEDENT'
+multip_stmt = stmt | multip_stmt stmt
+test = and_test | test 'or' and_test
+and_test = not_test | and_test 'and' not_test
+not_test = comparison | 'not' comparison
+comparison = expr comp_op expr
+comp_op = '<'|'>'|'=='|'>='|'<=' | '!='
+expr = term | '+' term | '-' term
+term = factor | '*' factor | '/' factor | '%' factor
+factor = '+' atom | atom | '-' atom
+atom = var | constant
+type = "float" | "char" 
