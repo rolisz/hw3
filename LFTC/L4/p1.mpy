@@ -1,0 +1,8 @@
+float r
+input(r)
+print("Perimetrul este")
+float p = 2.0*3.14*r
+print(p)
+print("Aria este ")
+float a = 3.14*r*r
+print(a)

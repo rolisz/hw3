@@ -1,0 +1,11 @@
+program = program '\n' | program stmt | 
+stmt = simple_stmt 
+simple_stmt = small_stmt '\n'
+small_stmt = expr_stmt | assig_stmt
+expr_stmt = type var 
+assig_stmt = var '=' term
+term = atom | term '*' atom
+atom = var | const
+type = 'float' | 'char' 
+var = 'var'
+const = 'const'

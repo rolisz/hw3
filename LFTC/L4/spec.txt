@@ -1,18 +1,19 @@
 program = program '\n' | program stmt | 
 stmt = simple_stmt | compound_stmt
-simple_stmt = small_stmt "\n"
-small_stmt = expr_stmt | print_stmt | read_stmt | flow_stmt
-expr_stmt = type var | type var '=' atom
+simple_stmt = small_stmt '\n'
+small_stmt = expr_stmt | assig_stmt | print_stmt | read_stmt | flow_stmt 
+expr_stmt = type var | type var '=' expr 
+assig_stmt = var '=' expr | var '=' funccall
 print_stmt = 'print' '(' atom ')'
 read_stmt = 'input' '(' var ')'
 flow_stmt = break_stmt | return_stmt
 break_stmt = 'break'
 return_stmt = 'return' atom
 compound_stmt = if_stmt | while_stmt | funcdef
-funcdef = 'def' type func_name '(' argslist ')' ':' suite
-funccall = func_name '(' call_list ')'
-argslist = argslist type var ',' | type var | 
-call_list = call_list ',' var | var | 
+funcdef = 'def' type var '(' argslist ')' ':' suite
+funccall = var '(' call_list ')'
+argslist = argslist ',' type var | type var
+call_list = call_list ',' expr | expr 
 if_stmt = 'if' test ':' suite | 'if' test ':' suite 'else' ':' suite
 while_stmt = 'while' test ':' suite | 'while' test ':' suite 'else' ':' suite
 suite = simple_stmt | '\n' 'INDENT' multip_stmt 'DEDENT'
@@ -22,8 +23,10 @@ and_test = not_test | and_test 'and' not_test
 not_test = comparison | 'not' comparison
 comparison = expr comp_op expr
 comp_op = '<'|'>'|'=='|'>='|'<=' | '!='
-expr = term | '+' term | '-' term
-term = factor | '*' factor | '/' factor | '%' factor
-factor = '+' atom | atom | '-' atom
-atom = var | constant
-type = "float" | "char" 
+expr = term | expr '+' term | expr '-' term
+term = factor | term '*' factor | term '/' factor | term '%' factor
+factor =  atom
+atom = var | const
+type = 'float' | 'char' 
+var = 'var'
+const = 'const'

@@ -103,7 +103,7 @@ def make_first_set(grammar):
 
 
 def make_follow_set(grammar):
-    follow = {x:set() for x in grammar.nonterminals}
+    follow = {x:set() for x in grammar.nonterminals.union(grammar.terminals)}
     follow[grammar.start+"'"] = '$'
 
     first = make_first_set(grammar)
@@ -115,8 +115,7 @@ def make_follow_set(grammar):
             if lh == 'E':
                 import pdb
                 # pdb.set_trace()
-            for i in range(len(rh) - 1):
-                if rh[i] in grammar.nonterminals:
+            for i in range(len(rh) -1):
                     old = follow[rh[i]].copy()
                     fb = cross_first(first, *rh[i+1:])
                     follow[rh[i]].update(fb.difference({''}))
@@ -140,7 +139,12 @@ def has_end(item, grammar):
             rule = (it[0], it[1][:-1])
             res.append(grammar.rules.index(rule))
     if len(res) > 1:
+        pprint.pprint(item)
+        print(res)
+        for r in res:
+            print(grammar.rules[r])
         print("Conflict reduce/reduce!")
+        exit()
     return res[0] if len(res) else None
 
 def analyze_grammar(grammar):
@@ -166,6 +170,10 @@ def analyze_grammar(grammar):
                 item_sets.append(moves[mv])
             add_transition(transitions, item_sets.index(it_s), mv, item_sets.index(moves[mv]))
 
+    for i, it in enumerate(item_sets):
+        print(i)
+        pprint.pprint(it, depth=4)
+
     for i, item in enumerate(item_sets):
         if (grammar.start+"'", (grammar.start, '..')) in item:
             add_transition(transitions, i, '$', 'acc')
@@ -179,19 +187,26 @@ def analyze_grammar(grammar):
 
 def analyze_input(grammar, transitions, inp):
     stack = [0]
-    inp = inp + '$'
+    try:
+        inp = inp + ['$']
+    except:
+        inp = inp + '$'
     out_st = []
     import pdb
     # pdb.set_trace()
     while len(inp) and len(stack):
         current_state = stack[-1]
-        char = "'" + inp[0] + "'" if len(inp) > 1 else inp[0]
+        char = "'" + inp[0] + "'" if inp[0] != '$'  else inp[0]
+        if (current_state, char) not in transitions and (current_state, '') in transitions:
+            char = ''
+        # print(char)
         if (current_state, char) in transitions:
             nxt = transitions[(current_state, char)]
             if type(nxt) == int:
                 stack.append(char)
                 stack.append(nxt)
-                inp = inp[1:]
+                if char != '':
+                    inp = inp[1:]
             elif nxt[0] == 'r':
                 rule = grammar.rules[int(nxt[1:])]
                 for i in range(len(rule[1])):
@@ -201,10 +216,15 @@ def analyze_input(grammar, transitions, inp):
                 stack.append(transitions[(stack[-2], stack[-1])])
                 out_st.append(rule)
             elif nxt == 'acc':
-                if inp == '$':
+                if inp[0] == '$':
                     return out_st
         else:
+            print("Invalid character/state combo")
+            print(char, current_state)
             break
+    print(stack)
+    print(inp)
+    print(out_st)
     print("Input not accepted!")
 
 if __name__ == "__main__":
@@ -218,9 +238,25 @@ if __name__ == "__main__":
 
     pprint.pprint(transitions)
 
-    while True:
-        x = raw_input("Dati o secventa: ")
-        if not x:
-            break
-        print(analyze_input(parsed_grammar, transitions, x))
+    if len(sys.argv) > 2:
+        import lexer
+
+        codif = lexer.codif
+
+        f = open(sys.argv[2], "rb")
+        fip, _, _ = lexer.lexer(f.read())
+
+        print(fip)
+
+        parsed_fip = map(lambda x: codif[x[0]], fip)
+        print(parsed_fip)
+
+        print(analyze_input(parsed_grammar, transitions, parsed_fip))
+
+    else:
+        while True:
+            x = raw_input("Dati o secventa: ")
+            if not x:
+                break
+            print(analyze_input(parsed_grammar, transitions, x))
 
